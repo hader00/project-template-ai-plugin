@@ -1,0 +1,51 @@
+{
+  "projectTemplates": [
+    {
+      "name": "ai-plugin-example",
+      "bundles": [
+        {
+          "url": "https://nexus.magnolia-cms.com/service/rest/v1/search/assets?sort=version&repository=public&maven.groupId=info.magnolia.tomcat.barebone&maven.artifactId=magnolia-tomcat-barebone&maven.extension=zip",
+          "postCommand": ["extract"]
+        },
+        {
+          "url": "https://nexus.magnolia-cms.com/service/rest/v1/search/assets?sort=version&repository=public&maven.groupId=info.magnolia.bundle&maven.artifactId=magnolia-community-demo-webapp&maven.extension=war",
+          "version": "latest",
+          "dest": "./apache-tomcat/webapps/magnoliaAuthor",
+          "postCommand": ["extract and override"],
+          "alternative": {
+            "groupId": "info.magnolia.demo",
+            "artifactId": "travel-demo-community-webapp"
+          }
+        }
+      ],
+      "plugins": [
+        {
+          "plugin": "@magnolia/cli-start-plugin"
+        },
+        {
+          "plugin": "@magnolia/cli-create-light-module-plugin"
+        },
+        {
+          "plugin": "@magnolia/cli-create-component-plugin",
+          "pluginArgs": {
+            "framework": "@magnolia/cli-freemarker-prototypes",
+            "prototype": "basic"
+          }
+        },
+        {
+          "plugin": "@magnolia/cli-create-page-plugin",
+          "pluginArgs": {
+            "framework": "@magnolia/cli-freemarker-prototypes",
+            "prototype": "basic"
+          }
+        },
+        {
+          "plugin": "@mhaderka/cli-ai-plugin"
+        }
+      ],
+      "configVars": {
+        "lightModulesPath": "./light-modules"
+      }
+    }
+  ]
+}
